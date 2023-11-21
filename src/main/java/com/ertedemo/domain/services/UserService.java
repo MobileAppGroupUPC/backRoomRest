@@ -17,4 +17,7 @@ public interface UserService {
     public Optional<User> update(User user);
 
     ResponseEntity<?> delete(Long userId);
+
+
+    public Long login(String email, String password);
 }

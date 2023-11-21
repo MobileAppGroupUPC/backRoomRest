@@ -45,4 +45,12 @@ public class UserServiceImpl implements UserService {
                     return ResponseEntity.ok().build();})
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
+
+    @Override
+    public Long login(String email, String password) {
+        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+
+        if(user.isEmpty()) return 0L;
+        return user.get().getId();
+    }
 }

@@ -1,6 +1,7 @@
 package com.ertedemo.api.rest;
 
 import com.ertedemo.api.resource.users.CreateUserResource;
+import com.ertedemo.api.resource.users.LoginCredential;
 import com.ertedemo.api.resource.users.UpdateUserResource;
 import com.ertedemo.api.resource.users.UserResponse;
 import com.ertedemo.domain.model.entites.User;
@@ -71,5 +72,13 @@ public class UserController {
         Optional<User> userUpdate = userService.update(user.get());
 
         return ResponseEntity.ok(new UserResponse(userUpdate.get()));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Long> login(@RequestBody LoginCredential loginCredential) {
+
+        return
+                ResponseEntity.ok(
+                userService.login(loginCredential.getEmail(), loginCredential.getPassword()));
     }
 }

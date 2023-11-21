@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping(value = "api/media")
 @AllArgsConstructor
@@ -33,10 +35,14 @@ public class MediaController {
             @PathVariable Long postId,
             @RequestParam("files") List<MultipartFile> files) {
 
+        if (files == null || files.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Optional<Post> post = postService.getById(postId);
 
-        if(post.isEmpty())
-            return ResponseEntity.badRequest().build();
+        if (post.isEmpty())
+            return ResponseEntity.notFound().build();
 
         List<String> fileUrls = new ArrayList<>();
 

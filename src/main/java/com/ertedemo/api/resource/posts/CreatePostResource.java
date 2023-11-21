@@ -17,4 +17,5 @@ public class CreatePostResource {
     private String category;
 
     private Long author_id;
+
 }

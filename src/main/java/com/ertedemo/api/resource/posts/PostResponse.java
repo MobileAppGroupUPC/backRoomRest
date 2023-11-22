@@ -28,8 +28,9 @@ public class PostResponse {
         this.location = post.getLocation();
         this.price = post.getPrice();
 
-        if (!post.getImageUrls().isEmpty()) {
-            this.imageUrls.addAll(post.getImageUrls());
+        List<String> postImageUrls = post.getImageUrls();
+        if (postImageUrls != null && !postImageUrls.isEmpty()) {
+            this.imageUrls.addAll(postImageUrls);
         } else {
             this.imageUrls.add("https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
         }

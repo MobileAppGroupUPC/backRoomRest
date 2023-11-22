@@ -78,8 +78,9 @@ public class PostController {
         if (author.isPresent()) {
 
             Post post = new Post(author.get(), postResource);
+            postService.create(post);
 
-            return ResponseEntity.ok(new PostResponse(postService.create(post).get()));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse(post));
         }
 
         return ResponseEntity.badRequest().build();

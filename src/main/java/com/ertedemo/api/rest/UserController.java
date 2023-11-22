@@ -7,6 +7,7 @@ import com.ertedemo.api.resource.users.UserResponse;
 import com.ertedemo.domain.model.entites.User;
 import com.ertedemo.domain.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +40,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserResource resource) {
+    public ResponseEntity<Long> createUser(@RequestBody CreateUserResource resource) {
         Optional<User> user = userService.create(new User(resource));
 
-        return ResponseEntity.ok(new UserResponse(user.get()));
+        if (user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(user.get().getId());
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping()

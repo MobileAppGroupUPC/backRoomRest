@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +36,6 @@ public class MediaController {
             @PathVariable Long postId,
             @RequestParam("files") List<MultipartFile> files) {
 
-        if (files == null || files.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
 
         Optional<Post> post = postService.getById(postId);
 
@@ -63,6 +61,7 @@ public class MediaController {
         post.get().setImageUrls(fileUrls);
         Optional<Post> postWithImages= postService.update(post.get());
 
+        //return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse(postWithImages.get()));
         return ResponseEntity.ok(new PostResponse(postWithImages.get()));
     }
 
